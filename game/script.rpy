@@ -41,7 +41,12 @@ label splashscreen:
 label start:
     $ avatars = Avatars() # Инициализируем модуль с аватарками
     scene bg main
-
+    menu:
+        "Демо карты":
+            jump SD_hellloop
+        "Пропустить":
+            jump SD_skip
+label SD_skip:
     $ result = renpy.imagemap("img/bg/map.jpg", "img/bg/map2.jpg", [  # координаты кликабельных мест мапы
         (230, 230, 325, 315, "castle"),
         (520, 215, 585, 260, "road"),
