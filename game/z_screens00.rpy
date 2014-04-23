@@ -28,7 +28,7 @@ image bg cave = './img/bg/cave.jpg'
 image mapvolcano idle = './img/bg/SD_mapvolcano idle.png'
 image mapvolcano hover = './img/bg/SD_mapvolcano hover.png'
 
-label SD_hellloop:                                         # Цикл GoTo 10 ^_^
+label SD_hellloop:                                         
     scene                                                  # почистим экран перед испоользованием
     call screen SD_scr_Map                                 # вызовем экран с картой
     return                                                 # хз зачем. Эта строка никогда не активируется, но на всякий случай.
@@ -39,7 +39,7 @@ screen SD_scr_Map:                                         # Основное о
     # Добавлет динамическое изображение, изменяющееся в зависимости от того, на что указывает курсор.                             
     add 'SD_testd' xpos 362 ypos 648
     # Добавляет две активные графические кнопки в определённых координатах.
-    # Обе отображают состояния "неактивно" и "наведённый курсор".
+    # Обе имеют отображаемые состояния "неактивно" и "наведённый курсор".
     # При нажатии вызывается функция ассоциированная с действием (action).
     imagebutton xpos -15 ypos 177 idle 'maptown idle' hover 'maptown hover' action Jump('SD_0_site')
     imagebutton xpos 817 ypos 5 idle 'mapvolcano idle' hover 'mapvolcano hover' action Jump('SD_1_site')
