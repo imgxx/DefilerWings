@@ -1,22 +1,21 @@
-#encoding:utf-8
-#!/usr/bin/python3
+# -*- coding: cp866 -*-
 
 import random
 __config__ = {
-    'gemstone_type': {'╨░╨╗╨╝╨░╨╖╨╛╨╝': 16, '╤А╤Г╨▒╨╕╨╜╨╛╨╝': 8, '╤В╨╛╨┐╨░╨╖╨╛╨╝': 4, '╨░╨╝╨╡╤В╨╕╤Б╤В╨╛╨╝': 2},
-    'gemstone_size': {' ╤Б ╨╜╨╡╨▒╨╛╨╗╤М╤И╨╕╨╝ %s': 1, ' ╤Б %s': 4, ' ╤Б ╨▒╨╛╨╗╤М╤И╨╕╨╝ %s': 15, ' ╤Б ╨▒╨╛╨╗╤М╤И╨╕╨╝ %s ╨▓ ╨╛╨▒╤А╨░╨╝╨╗╨╡╨╜╨╕╨╕ ╨╜╨╡╤Б╨║╨╛╨╗╤М╨║╨╕╤Е ╨╜╨╡╨▒╨╛╨╗╤М╤И╨╕╤Е': 50},
-    'jewellery_type': {'╨║╨╛╨╗╤М╤Ж╨╛': 1, '╨║╤Г╨╗╨╛╨╜': 3, '╨╛╨╢╨╡╤А╨╡╨╗╤М╨╡': 5, '╤В╨╕╨░╤А╨░': 6, '╨║╨╛╤А╨╛╨╜╨░': 15, '╤Б╨║╨╕╨┐╨╡╤В╤А': 25},
-    'jewellery_metal': {'╨Ч╨╛╨╗╨╛╤В╨╛╨╣': 12, '╨б╨╡╤А╨╡╨▒╤А╤П╨╜╤Л╨╣': 1},
+    'gemstone_type': {'алмазом': 16, 'рубином': 8, 'топазом': 4, 'аметистом': 2},
+    'gemstone_size': {' с небольшим %s': 1, ' с %s': 4, ' с большим %s': 15, ' с большим %s в обрамлении нескольких небольших': 50},
+    'jewellery_type': {'кольцо': 1, 'кулон': 3, 'ожерелье': 5, 'тиара': 6, 'корона': 15, 'скипетр': 25},
+    'jewellery_metal': {'Золотой': 12, 'Серебряный': 1},
     'weapon_type': {
-        '╨┤╤А╨╡╨▓╨║╨╛╨╝ ╨│╨╛╨╗╨╛╨▓╨╛╨╣': {'╨С╤Г╨╗╨░╨▓╨░': 4, '╨Ь╨╛╤А╨│╨╡╨╜╤И╤В╨╡╤А╨╜': 7},
-        '╨╗╨╡╨╖╨▓╨╕╨╡╨╝ ╤А╤Г╨║╨╛╤П╤В╤М╤О': {'╨Ъ╨╕╨╜╨╢╨░╨╗': 1, '╨Ф╨╗╨╕╨╜╨╜╤Л╨╣ ╨╝╨╡╤З': 9},
-        '╨╗╨╡╨╖╨▓╨╕╨╡╨╝ ╨┤╤А╨╡╨▓╨║╨╛╨╝': {'╨Ъ╨╛╨┐╤М╨╡': 3, '╨в╨╛╨┐╨╛╤А': 8},
-        '╨┤╤А╨╡╨▓╨║╨╛╨╝': {'╨Я╨╛╤Б╨╛╤Е': 2}},
+        'древком головой': {'Булава': 4, 'Моргенштерн': 7},
+        'лезвием рукоятью': {'Кинжал': 1, 'Длинный меч': 9},
+        'лезвием древком': {'Копье': 3, 'Топор': 8},
+        'древком': {'Посох': 2}},
     'weapon_decorate': {
-        '╨┤╤А╨╡╨▓╨║╨╛╨╝': {'╤А╨╡╨╖╨╜╤Л╨╝': 1, '╨┐╨╛╨╗╨╕╤А╨╛╨▓╨░╨╜╨╜╤Л╨╝': 2},
-        '╨│╨╛╨╗╨╛╨▓╨╛╨╣': {'╨┐╨╛╨╗╨╕╤А╨╛╨▓╨░╨╜╨╜╨╛╨╣': 1, '╨▓╨╛╤А╨╛╨╜╨╡╨╜╨╛╨╣': 2, '╤В╤А╨░╨▓╨╗╨╡╨╜╨╛╨╣': 3, '╨┐╨╛╤Б╨╡╤А╨╡╨▒╤А╨╡╨╜╨╜╨╛╨╣': 4, '╨┐╨╛╨╖╨╛╨╗╨╛╤З╨╜╨╜╨╛╨╣': 5},
-        '╨╗╨╡╨╖╨▓╨╕╨╡╨╝': {'╨┐╨╛╨╗╨╕╤А╨╛╨▓╨░╨╜╨╜╤Л╨╝': 2, '╨▓╨╛╤А╨╛╨╜╨╡╨╜╤Л╨╝': 3, '╤В╤А╨░╨▓╨╗╨╡╨╜╤Л╨╝': 4, '╨┐╨╛╤Б╨╡╤А╨╡╨▒╤А╨╡╨╜╨╜╤Л╨╝': 5, '╨┐╨╛╨╖╨╛╨╗╨╛╤З╨╜╨╜╤Л╨╝': 6},
-        '╤А╤Г╨║╨╛╤П╤В╤М╤О': {'╨╖╨╛╨╗╨╛╤В╨╛╨╣': 12, '╤Б╨╡╤А╨╡╨▒╤А╤П╨╜╨╛╨╣': 1}}}
+        'древком': {'резным': 1, 'полированным': 2},
+        'головой': {'полированной': 1, 'вороненой': 2, 'травленой': 3, 'посеребренной': 4, 'позолочнной': 5},
+        'лезвием': {'полированным': 2, 'вороненым': 3, 'травленым': 4, 'посеребренным': 5, 'позолочнным': 6},
+        'рукоятью': {'золотой': 12, 'серебряной': 1}}}
 
 
 def d(*args):
@@ -33,8 +32,8 @@ def d(*args):
 
 
 def rusconvert(word1, word2):
-    config = {'╨╛': {'╨╛╨╣': '╨╛╨╡', '╤Л╨╣': '╨╛╨╡'}, '╨╕': {'╨╛╨╣': '╤Л╨╡', '╤Л╨╣': '╤Л╨╡'}, '╨╜': {'╨╛╨╣': '╨╛╨╣', '╤Л╨╣': '╤Л╨╣'},
-        '╨╡': {'╨╛╨╣': '╨╛╨╡', '╤Л╨╣': '╨╛╨╡'}, '╨░': {'╨╛╨╣': '╨░╤П', '╤Л╨╣': '╨░╤П'}, '╤А': {'╨╛╨╣': '╨╛╨╣', '╤Л╨╣': '╤Л╨╣'}}
+    config = {'о': {'ой': 'ое', 'ый': 'ое'}, 'и': {'ой': 'ые', 'ый': 'ые'}, 'н': {'ой': 'ой', 'ый': 'ый'},
+        'е': {'ой': 'ое', 'ый': 'ое'}, 'а': {'ой': 'ая', 'ый': 'ая'}, 'р': {'ой': 'ой', 'ый': 'ый'}}
     for key, value in config.items():
         if word1[-len(key):] == key:
             for key2, value2 in value.items():
@@ -49,15 +48,15 @@ def get_some_weapon():
         for weapon_name, weapon_cost in weapon_names.items():
             possible_weapon.append((weapon_cost, weapon_name))
             for weapon_decorate_type_name, weapon_decorate_type_cost in __config__['weapon_decorate'][weapon_decorates[0]].items():
-                decorate_name = '╤Б %s %s' % (weapon_decorate_type_name, weapon_decorates[0])
+                decorate_name = 'с %s %s' % (weapon_decorate_type_name, weapon_decorates[0])
                 possible_weapon.append((weapon_cost + weapon_decorate_type_cost, '%s %s' % (weapon_name, decorate_name)))
                 if len(weapon_decorates) > 1:
                     for second_weapon_decorate_type_name, second_weapon_decorate_type_cost in __config__['weapon_decorate'][weapon_decorates[1]].items():
                         second_decorate_name = '%s %s' % (second_weapon_decorate_type_name, weapon_decorates[1])
-                        possible_weapon.append((weapon_cost + weapon_decorate_type_cost + second_weapon_decorate_type_cost, '%s %s ╨╕ %s' % (weapon_name, decorate_name, second_decorate_name)))
+                        possible_weapon.append((weapon_cost + weapon_decorate_type_cost + second_weapon_decorate_type_cost, '%s %s и %s' % (weapon_name, decorate_name, second_decorate_name)))
             if len(weapon_decorates) > 1:
                 for second_weapon_decorate_type_name, second_weapon_decorate_type_cost in __config__['weapon_decorate'][weapon_decorates[1]].items():
-                    second_decorate_name = '╤Б %s %s' % (second_weapon_decorate_type_name, weapon_decorates[1])
+                    second_decorate_name = 'с %s %s' % (second_weapon_decorate_type_name, weapon_decorates[1])
                     possible_weapon.append((weapon_cost + second_weapon_decorate_type_cost, '%s %s' % (weapon_name, second_decorate_name)))
     return possible_weapon
 
@@ -112,7 +111,7 @@ def get_treasure(quantity):
         summa += cost
         weapon_quantity -= 1
     if coin:
-        output.append((summa / 2, '╨б╨╡╤А╨╡╨▒╤А╨╛'))
+        output.append((summa / 2, 'Серебро'))
         summa += summa / 2
     output.reverse()
     return output
@@ -120,26 +119,26 @@ def get_treasure(quantity):
 
 class Dragon(object):
     config = {
-        'possible_lair_defense': (('╨Ь╨╡╤Е╨░╨╜╨╕╤З╨╡╤Б╨║╨╕╨╡ ╨╗╨╛╨▓╤Г╤И╨║╨╕', 1), ('╨Ь╨░╨│╨╕╤З╨╡╤Б╨║╨╕╨╡ ╨╗╨╛╨▓╤Г╤И╨║╨╕', 1), ('╨п╨┤╨╛╨▓╨╕╤В╤Л╨╡ ╤В╨▓╨░╤А╨╕', 1), ('╨Ю╤Е╤А╨░╨╜╨░', 2), ('╨н╨╗╨╕╤В╨╜╨░╤П ╨╛╤Е╤А╨░╨╜╨░', 3)),
+        'possible_lair_defense': (('Механические ловушки', 1), ('Магические ловушки', 1), ('Ядовитые твари', 1), ('Охрана', 2), ('Элитная охрана', 3)),
         'possible_lair_location': (
-            ('╨С╤Г╤А╨╡╨╗╨╛╨╝╨╜╤Л╨╣ ╨╛╨▓╤А╨░╨│', 0, []),
-            ('╨Э╨╡╨┐╤А╨╕╤Б╤В╤Г╨┐╨╜╨░╤П ╨▓╨╡╤А╤И╨╕╨╜╨░', 0, ['╨░╨╗╤М╨┐╨╕╨╜╨╕╨╖╨╝']),
-            ('╨ж╨╕╤В╨░╨┤╨╡╨╗╤М ╨╛╨┤╨╕╨╜╨╛╤З╨╡╤Б╤В╨▓╨░', 0, ['╨░╨╗╤М╨┐╨╕╨╜╨╕╨╖╨╝', '╨╖╨░╤Й╨╕╤В╨░ ╨╛╤В ╤Е╨╛╨╗╨╛╨┤╨░']),
-            ('╨Т╤Г╨╗╨║╨░╨╜╨╕╤З╨╡╤Б╨║╨░╤П ╤А╨░╤Б╤Б╨╡╨╗╨╕╨╜╨░', 0, ['╨░╨╗╤М╨┐╨╕╨╜╨╕╨╖╨╝', '╨╖╨░╤Й╨╕╤В╨░ ╨╛╤В ╨╛╨│╨╜╤П']),
-            ('╨Я╨╛╨┤╨▓╨╛╨┤╨╜╤Л╨╣ ╨│╤А╨╛╤В', 0, ['╨┐╨╗╨░╨▓╨░╨╜╤М╨╡']),
-            ('╨Я╨╛╨┤╨╖╨╡╨╝╨╜╨░╤П ╨╜╨╛╤А╨░', 1, []),
-            ('╨Ф╤А╨░╨║╨╛╨╜╨╕╨╣ ╨╖╨░╨╝╨╛╨║', 1, []),
-            ('╨С╨╡╤А╨╗╨╛╨│╨░ ╨╗╤О╨┤╨╛╨╡╨┤╨░', 1, []),
-            ('╨Я╤А╨╛╤Б╤В╨╛╤А╨╜╨░╤П ╨┐╨╡╤Й╨╡╤А╨░', 1, []),
-            ('╨а╤Г╨╕╨╜╤Л ╨▒╨░╤И╨╜╨╕', 0, []),
-            ('╨а╤Г╨╕╨╜╤Л ╨╝╨╛╨╜╨░╤Б╤В╤Л╤А╤П', 1, []),
-            ('╨а╤Г╨╕╨╜╤Л ╨║╨░╨╝╨╡╨╜╨╜╨╛╨╣ ╨║╤А╨╡╨┐╨╛╤Б╤В╨╕', 2, []),
-            ('╨а╤Г╨╕╨╜╤Л ╨║╨╛╤А╨╛╨╗╨╡╨▓╤Б╨║╨╛╨│╨╛ ╨╖╨░╨╝╨║╨░', 3, []),
-            ('╨Ы╨╡╨┤╤П╨╜╨░╤П ╤Ж╨╕╤В╨░╨┤╨╡╨╗╤М', 1, ['╨░╨╗╤М╨┐╨╕╨╜╨╕╨╖╨╝', '╨╖╨░╤Й╨╕╤В╨░ ╨╛╤В ╤Е╨╛╨╗╨╛╨┤╨░']),
-            ('╨Т╤Г╨╗╨║╨░╨╜╨╕╤З╨╡╤Б╨║╨░╤П ╨║╤Г╨╖╨╜╨╕╤Ж╨░', 1, ['╨╖╨░╤Й╨╕╤В╨░ ╨╛╤В ╨╛╨│╨╜╤П']),
-            ('╨Ч╨░╨╝╨╛╨║ ╨▓ ╨╛╨▒╨╗╨░╨║╨░╤Е', 2, ['╨┐╨╛╨╗╤С╤В']),
-            ('╨Я╨╛╨┤╨▓╨╛╨┤╨╜╤Л╨╡ ╤Е╨╛╤А╨╛╨╝╤Л', 1, ['╨┐╨╗╨░╨▓╨░╨╜╤М╨╡']),
-            ('╨Я╨╛╨┤╨│╨╛╤А╨╜╤Л╨╡ ╤З╨╡╤А╤В╨╛╨│╨╕', 2, ['╨░╨╗╤М╨┐╨╕╨╜╨╕╨╖╨╝']))}
+            ('Буреломный овраг', 0, []),
+            ('Неприступная вершина', 0, ['альпинизм']),
+            ('Цитадель одиночества', 0, ['альпинизм', 'защита от холода']),
+            ('Вулканическая расселина', 0, ['альпинизм', 'защита от огня']),
+            ('Подводный грот', 0, ['плаванье']),
+            ('Подземная нора', 1, []),
+            ('Драконий замок', 1, []),
+            ('Берлога людоеда', 1, []),
+            ('Просторная пещера', 1, []),
+            ('Руины башни', 0, []),
+            ('Руины монастыря', 1, []),
+            ('Руины каменной крепости', 2, []),
+            ('Руины королевского замка', 3, []),
+            ('Ледяная цитадель', 1, ['альпинизм', 'защита от холода']),
+            ('Вулканическая кузница', 1, ['защита от огня']),
+            ('Замок в облаках', 2, ['полёт']),
+            ('Подводные хоромы', 1, ['плаванье']),
+            ('Подгорные чертоги', 2, ['альпинизм']))}
 
     def __init__(self):
         self.sleep = True
@@ -147,8 +146,8 @@ class Dragon(object):
         self.ill_fame_point = 0
         self.treasure_room = []
         self.treasure_room_silver = 0
-        self.achievement = {'╨б╤В╤А╨░╨╢ ╤Б╨╛╨║╤А╨╛╨▓╨╕╤Й': True}
-        self.lair_location = ('╨С╤Г╤А╨╡╨╗╨╛╨╝╨╜╤Л╨╣ ╨╛╨▓╤А╨░╨│', 0, [])
+        self.achievement = {'Страж сокровищ': True}
+        self.lair_location = ('Буреломный овраг', 0, [])
         self.lair_defense = []
         self.my_enemy = {}
         self.thief_loot = []
@@ -163,17 +162,17 @@ class Dragon(object):
 
     def del_thief(self, data):
         if data['result'] == 'success':
-            self.achievement['╨б╤В╤А╨░╨╢ ╤Б╨╛╨║╤А╨╛╨▓╨╕╤Й'] = False
+            self.achievement['Страж сокровищ'] = False
         elif data['result'] in ['death', 'catch']:
             self.ill_fame_point += data['level'] + len(data['items'])
             self.thief_loot.extend(data['items'])
         if 'comment' in data:
-            print(data['comment'])
+            print('debug: ' + data['comment'])
         if 'sex' in data:
             if data['sex'] == 'female':
-                print('╨Ф╤А╨░╨║╨╛╨╜: ╨┐╨╛╨╗╤Г╤З╨╡╨╜╨░ ╨┤╨╡╨▓╤Б╤В╨▓╨╡╨╜╨╜╨╕╤Ж╨░')
+                print('Дракон: получена девственница')
             else:
-                print('╨Ф╤А╨░╨║╨╛╨╜: ╤Б╤К╨╡╨┤╨╡╨╜ ╨▓╨╛╤А')
+                print('Дракон: съеден вор')
         del self.my_enemy['thief']
 
     def give_item(self, item):
@@ -183,7 +182,7 @@ class Dragon(object):
 
     def switch_sleep(self):
         self.sleep = False if self.sleep else True
-        print('╨Ф╤А╨░╨║╨╛╨╜: sleep =', str(self.sleep))
+        print('Дракон: sleep = ' + str(self.sleep))
 
     def check_lair_restriction(self):
         return self.lair_location[2]
@@ -199,68 +198,68 @@ class Dragon(object):
 
     def add_treasure(self, treasure_list):
         for treasure in treasure_list:
-            if treasure[1] == '╨б╨╡╤А╨╡╨▒╤А╨╛':
+            if treasure[1] == 'Серебро':
                 self.treasure_room_silver += treasure[0]
             else:
                 self.treasure_room.append(treasure)
 
     def remove_treasure(self, treasure_list):
         for treasure in treasure_list:
-            if treasure[1] == '╨б╨╡╤А╨╡╨▒╤А╨╛':
+            if treasure[1] == 'Серебро':
                 self.treasure_room_silver -= treasure[0]
             else:
                 self.treasure_room.remove(treasure)
 
     def list_treasure(self):
-        return self.treasure_room + [(self.treasure_room_silver, '╨б╨╡╤А╨╡╨▒╤А╨╛')]
+        return self.treasure_room + [(self.treasure_room_silver, 'Серебро')]
 
 
 class Thief(object):
     config = {
-        'possible_level_name': {5: '╨╝╨░╤Б╤В╨╡╤А-╨▓╨╛╤А', 4: '╤А╨░╤Б╤Е╨╕╤В╨╕╤В╨╡╨╗╤М ╨│╤А╨╛╨▒╨╜╨╕╤Ж', 3: '╨▓╨╖╨╗╨╛╨╝╤Й╨╕╨║', 2: '╨┤╨╛╨╝╤Г╤И╨╜╨╕╨║', 1: '╨╝╨░╤А╨╛╨┤╤С╤А'},
-        'male_name': ['╨Э╨░╤В╨░╨╜', '╨Ы╨╡╨╛', '╨н╨╜╨╖╨╛', '╨Ы╤Г╨╕', '╨Ц╤О╨╗╤М', '╨в╨╕╨╝╨╡╨╛', '╨г╨│╨╛', '╨Р╤А╤В╤О╤А', '╨н╤В╨░╨╜', '╨Ь╨░╤В╨╕╤Б', '╨Р╨┤╨░╨╝', '╨Э╨╛╨╗╨░╨╜', '╨Ъ╨╗╨╡╨╝╨░╨╜'],
-        'female_name': ['╨н╨╝╨╝╨░', '╨Ы╨╛╨╗╨░', '╨Ъ╨╗╨╛╤Н', '╨Ш╨╜╨╡╤Б', '╨Ы╨╡╨░', '╨Ь╨░╨╜╨╛', '╨Ч╨╛╤Н', '╨Ы╨╕╨╗╤Г', '╨Ы╨╕╨╜╨░', '╨н╨▓╨░', '╨Ы╤Г╨╜╨░', '╨Р╨╗╨╕╤Б'],
-        'male_nickname': ['╨Ч╨╛╨╗╨╛╤В╨╛╨╣', '╨е╤Г╨┤╨╛╨╣', '╨Ы╤Л╤Б╤Л╨╣', '╨а╤Л╨╢╨╕╨╣', '╨б╨╕╨┐╨╗╤Л╨╣', '╨е╤А╨╛╨╝╨╛╨╣', '╨Ъ╨░╤Б╨╛╨╣', '╨б╨╕╨╖╤Л╨╣', '╨Я╨░╨╗╤С╨╜╤Л╨╣'],
-        'female_nickname': ['╨и╤В╤Г╤З╨║╨░', '╨в╨╕╤Е╨░╤П', '╨Ъ╨╛╤И╨║╨░', '╨Ъ╨╛╤А╨╛╨╗╨╡╨▓╨░', '╨Ы╨╛╨▓╨║╨░╤П', '╨б╨║╨╛╨╗╤М╨╖╨║╨░╤П', '╨е╨╕╤В╤А╨░╤П', '╨б╨╡╤А╨╡╨▒╤А╤П╨╜╨░╤П'],
-        'unisex_nickname': ['╨Ы╤Г╨║╨╛╨▓╨╕╤Ж╨░', '╨Ь╨╡╨┤╨▓╨╡╨┤╤М', '╨Ъ╨╕╤А╨┐╨╕╤З', '╨Ы╨╡╨▓╤И╨░', '╨в╨╡╨╜╤М', '╨б╨╜╨╡╨╢╨╕╨╜╨║╨░', '╨У╨░╨┤╤О╨║╨░', '╨Ш╤Б╨║╤А╨░', '╨в╨╛╤З╨╕╨╗╨╛'],
+        'possible_level_name': {5: 'мастер-вор', 4: 'расхититель гробниц', 3: 'взломщик', 2: 'домушник', 1: 'мародёр'},
+        'male_name': ['Натан', 'Лео', 'Энзо', 'Луи', 'Жюль', 'Тимео', 'Уго', 'Артюр', 'Этан', 'Матис', 'Адам', 'Нолан', 'Клеман'],
+        'female_name': ['Эмма', 'Лола', 'Клоэ', 'Инес', 'Леа', 'Мано', 'Зоэ', 'Лилу', 'Лина', 'Эва', 'Луна', 'Алис'],
+        'male_nickname': ['Золотой', 'Худой', 'Лысый', 'Рыжий', 'Сиплый', 'Хромой', 'Касой', 'Сизый', 'Палёный'],
+        'female_nickname': ['Штучка', 'Тихая', 'Кошка', 'Королева', 'Ловкая', 'Скользкая', 'Хитрая', 'Серебряная'],
+        'unisex_nickname': ['Луковица', 'Медведь', 'Кирпич', 'Левша', 'Тень', 'Снежинка', 'Гадюка', 'Искра', 'Точило'],
         'possible_ability': {
-            '╨Р╨╗╤М╨┐╨╕╨╜╨╕╤Б╤В': ['╨░╨╗╤М╨┐╨╕╨╜╨╕╨╖╨╝'],
-            '╨Э╤Л╤А╤П╨╗╤М╤Й╨╕╨║': ['╨┐╨╗╨░╨▓╨░╨╜╤М╨╡'],
-            '╨Ц╨░╨┤╨╕╨╜╨░': [],
-            '╨Ь╨╡╤Е╨░╨╜╨╕╨║': [],
-            '╨Ч╨╜╨░╤В╨╛╨║ ╨╝╨░╨│╨╕╨╕': [],
-            '╨Ю╤В╤А╨░╨▓╨╕╤В╨╡╨╗╤М': [],
-            '╨Р╤Б╤Б╨░╤Б╨╕╨╜': [],
-            '╨Э╨╛╤З╨╜╨░╤П ╤В╨╡╨╜╤М': [],
-            '╨Ы╨╛╨▓╨║╨░╤З': []},
+            'Альпинист': ['альпинизм'],
+            'Ныряльщик': ['плаванье'],
+            'Жадина': [],
+            'Механик': [],
+            'Знаток магии': [],
+            'Отравитель': [],
+            'Ассасин': [],
+            'Ночная тень': [],
+            'Ловкач': []},
         'possible_items': {
-            '╨Я╨╗╨░╨╜ ╨╛╨│╤А╨░╨▒╨╗╨╡╨╜╨╕╤П': [[], '╨Я╨╗╨╛╤Е╨╛╨╣ ╨┐╨╗╨░╨╜'],
-            '╨б╤Е╨╡╨╝╨░ ╤В╨░╨╣╨╜╤Л╤Е ╨┐╤А╨╛╤Е╨╛╨┤╨╛╨▓': [[], None],
-            '╨б╨╛╨╜╨╜╤Л╨╣ ╨┐╨╛╤А╨╛╤И╨╛╨║': [[], None],
-            '╨С╨╡╨╖╨┤╨╛╨╜╨╜╤Л╨╣ ╨╝╨╡╤И╨╛╨║': [[], '╨Ф╤Л╤А╤П╨▓╤Л╨╣ ╨╝╨╡╤И╨╛╨║'],
-            '╨Р╨╜╤В╨╕╨┤╨╛╤В': [['╨в╨▓╨░╤А╨╕'], None],
-            '╨Ч╨░╤З╨░╤А╨╛╨▓╨░╨╜╨╜╤Л╨╣ ╨║╨╕╨╜╨╢╨░╨╗': [[], '╨Я╤А╨╛╨║╨╗╤П╤В╤Л╨╣ ╨║╨╕╨╜╨╢╨░╨╗'],
-            '╨Ъ╨╛╨╗╤М╤Ж╨╛-╨╜╨╡╨▓╨╕╨┤╨╕╨╝╨║╨░': [[], '╨Ъ╨╛╨╗╤М╤Ж╨╛ ╨╝╨╡╤А╤Ж╨░╨╜╨╕╤П'],
-            '╨Ы╨╡╤В╤Г╤З╨╕╨╡ ╤Б╨░╨╜╨┤╨░╨╗╨╕╨╕': [['╨┐╨╛╨╗╤С╤В', '╨░╨╗╤М╨┐╨╕╨╜╨╕╨╖╨╝'], '╨Ю╤Й╨╕╨┐╨░╨╜╨╜╤Л╨╡ ╤Б╨░╨╜╨┤╨░╨╗╨╕╨╕'],
-            '╨Ю╤Е╨╗╨░╨╢╨┤╨░╤О╤Й╨╕╨╣ ╨░╨╝╤Г╨╗╨╡╤В': [['╨╖╨░╤Й╨╕╤В╨░ ╨╛╤В ╨╛╨│╨╜╤П'], '╨Ь╨╛╤А╨╛╨╖╨╕╨╗╤М╨╜╤Л╨╣ ╨░╨╝╤Г╨╗╨╡╤В'],
-            '╨б╨╛╨│╤А╨╡╨▓╨░╤О╤Й╨╕╨╣ ╨░╨╝╤Г╨╗╨╡╤В': [['╨╖╨░╤Й╨╕╤В╨░ ╨╛╤В ╤Е╨╛╨╗╨╛╨┤╨░'], '╨и╨░╤И╨╗╤Л╤З╨╜╤Л╨╣ ╨░╨╝╤Г╨╗╨╡╤В']}}
+            'План ограбления': [[], 'Плохой план'],
+            'Схема тайных проходов': [[], None],
+            'Сонный порошок': [[], None],
+            'Бездонный мешок': [[], 'Дырявый мешок'],
+            'Антидот': [['Твари'], None],
+            'Зачарованный кинжал': [[], 'Проклятый кинжал'],
+            'Кольцо-невидимка': [[], 'Кольцо мерцания'],
+            'Летучие сандалии': [['полёт', 'альпинизм'], 'Ощипанные сандалии'],
+            'Охлаждающий амулет': [['защита от огня'], 'Морозильный амулет'],
+            'Согревающий амулет': [['защита от холода'], 'Шашлычный амулет']}}
 
     def __init__(self, target, level):
         self.target = target
         self.level = level
         self.ability = list(set([random.choice(list(self.config['possible_ability'].keys())) for index in range(self.level) if d(2)]))
-        self.level_name = self.config['possible_level_name'][level] if level in self.config['possible_level_name'] else '╨▓╨╛╤А %s' % str(level)
+        self.level_name = self.config['possible_level_name'][level] if level in self.config['possible_level_name'] else 'вор %s' % str(level)
         self.sex = random.choice(['male', 'female'])
         self.name = self.make_name()
         self.items = []
-        print('debug: ╨Я╨╛╤П╨▓╨╕╨╗╤Б╤П %s ╨┐╨╛ ╨╕╨╝╨╡╨╜╨╕ %s' % (self.level_name, self.name))  # debug
+        print('debug: Появился %s по имени %s' % (self.level_name, self.name)) # debug
 
     def about(self):
-        print('╨╕╨╝╤П =', self.name)
-        print('╤Г╤А╨╛╨▓╨╡╨╜╤М =', self.level_name)
-        print('╤Б╨┐╨╛╤Б╨╛╨▒╨╜╨╛╤Б╤В╨╕:' + ', '.join(self.ability))
-        print('╨┐╨╛╨╗ =', self.sex)
-        print('╨┐╤А╨╡╨┤╨╝╨╡╤В╤Л:' + '\n'.join(self.items))
+        print('имя = ' + self.name)
+        print('пол = ' + self.sex)
+        print('уровень = ' + self.level_name)
+        print('способности:' + '\n'.join(self.ability))
+        print('предметы:' + '\n'.join(self.items))
 
     def make_name(self):
         if random.choice([False, True]):
@@ -310,7 +309,7 @@ class Thief(object):
             else:
                 self.preparation()
         else:
-            print('debug: %s ╨▓╤Л╨╢╨╕╨┤╨░╨╡╤В.' % self.name)  # debug
+            print('debug: %s выжидает.' % self.name) # debug
 
     def preparation(self, must_have_item_effect=None):
         if must_have_item_effect is None:
@@ -322,7 +321,7 @@ class Thief(object):
             if len(must_have_item_effect) == 0:
                 self.sneak()
             else:
-                self.target.del_thief({'result': 'pass', 'comment': 'debug: %s ╤Б╨┤╨░╨╡╤В╤Б╤П ╨╕╨╖ ╨╖╨░ ╨╜╨╡╨▓╨╛╨╖╨╝╨╛╨╢╨╜╨╛╤Б╤В╨╕ ╨┤╨╛╨▒╤А╨░╤В╤М╤Б╤П ╨┤╨╛ ╨╗╨╛╨│╨╛╨▓╨░' % self.name})
+                self.target.del_thief({'result': 'pass', 'comment': 'debug: %s сдается из за невозможности добраться до логова' % self.name})
         else:
             if d(2):
                 self.items.append(random.choice(possible_items))
@@ -338,77 +337,77 @@ class Thief(object):
                     if len(set(value[0]) | set(self.target.check_lair_restriction())) != 0:
                         death = True
         if death:
-            self.target.del_thief({'result': 'death', 'level': self.level, 'items': [], 'comment': '╨┤╨╛╤А╨╛╨│╨░ ╤Г╨▒╨╕╨╗╨░'})
+            self.target.del_thief({'result': 'death', 'level': self.level, 'items': [], 'comment': 'дорога убила'})
             return
-        if '╨Я╨╗╨░╨╜ ╨╛╨│╤А╨░╨▒╨╗╨╡╨╜╨╕╤П' in self.items:
+        if 'План ограбления' in self.items:
             luck = self.level + 1
-        elif '╨Я╨╗╨╛╤Е╨╛╨╣ ╨┐╨╗╨░╨╜' in self.items:
+        elif 'Плохой план' in self.items:
             luck = self.level - 1
         else:
             luck = self.level
-        if '╨б╤Е╨╡╨╝╨░ ╤В╨░╨╣╨╜╤Л╤Е ╨┐╤А╨╛╤Е╨╛╨┤╨╛╨▓' not in self.items:
+        if 'Схема тайных проходов' not in self.items:
             luck -= sum([1 for index in range(self.target.check_lair_inaccessibility()) if d()])
         if luck < 0:
-            self.target.del_thief({'result': 'death', 'level': self.level, 'items': self.breaking_items(), 'comment': '╨╜╨╡╨┐╤А╨╕╤Б╤В╤Г╨┐╨╜╨╛╤Б╤В╤М ╤Г╨▒╨╕╨╗╨░'})
+            self.target.del_thief({'result': 'death', 'level': self.level, 'items': self.breaking_items(), 'comment': 'неприступность убила'})
             return
         lair_defense = dict(self.target.get_lair_defense())
-        if '╨Ь╨╡╤Е╨░╨╜╨╕╨║' not in self.ability:
-            if '╨Ь╨╡╤Е╨░╨╜╨╕╤З╨╡╤Б╨║╨╕╨╡ ╨╗╨╛╨▓╤Г╤И╨║╨╕' in lair_defense:
-                luck -= sum([1 for index in range(lair_defense['╨Ь╨╡╤Е╨░╨╜╨╕╤З╨╡╤Б╨║╨╕╨╡ ╨╗╨╛╨▓╤Г╤И╨║╨╕']) if d()])
+        if 'Механик' not in self.ability:
+            if 'Механические ловушки' in lair_defense:
+                luck -= sum([1 for index in range(lair_defense['Механические ловушки']) if d()])
         if luck < 0:
-            self.target.del_thief({'result': 'death', 'level': self.level, 'items': self.breaking_items(), 'comment': '╨Ь╨╡╤Е╨░╨╜╨╕╤З╨╡╤Б╨║╨╕╨╡ ╨╗╨╛╨▓╤Г╤И╨║╨╕ ╤Г╨▒╨╕╨╗╨╕'})
+            self.target.del_thief({'result': 'death', 'level': self.level, 'items': self.breaking_items(), 'comment': 'Механические ловушки убили'})
             return
-        if '╨Ч╨╜╨░╤В╨╛╨║ ╨╝╨░╨│╨╕╨╕' not in self.ability:
-            if '╨Ь╨░╨│╨╕╤З╨╡╤Б╨║╨╕╨╡ ╨╗╨╛╨▓╤Г╤И╨║╨╕' in lair_defense:
-                luck -= sum([1 for index in range(lair_defense['╨Ь╨░╨│╨╕╤З╨╡╤Б╨║╨╕╨╡ ╨╗╨╛╨▓╤Г╤И╨║╨╕']) if d()])
+        if 'Знаток магии' not in self.ability:
+            if 'Магические ловушки' in lair_defense:
+                luck -= sum([1 for index in range(lair_defense['Магические ловушки']) if d()])
         if luck < 0:
-            self.target.del_thief({'result': 'death', 'level': self.level, 'items': self.breaking_items(), 'comment': '╨Ь╨░╨│╨╕╤З╨╡╤Б╨║╨╕╨╡ ╨╗╨╛╨▓╤Г╤И╨║╨╕ ╤Г╨▒╨╕╨╗╨╕'})
+            self.target.del_thief({'result': 'death', 'level': self.level, 'items': self.breaking_items(), 'comment': 'Магические ловушки убили'})
             return
-        if '╨Ю╤В╤А╨░╨▓╨╕╤В╨╡╨╗╤М' not in self.ability and '╨Р╨╜╤В╨╕╨┤╨╛╤В' not in self.items and '╨п╨┤╨╛╨▓╨╕╤В╤Л╨╡ ╤В╨▓╨░╤А╨╕' in lair_defense:
-                luck -= sum([1 for index in range(lair_defense['╨п╨┤╨╛╨▓╨╕╤В╤Л╨╡ ╤В╨▓╨░╤А╨╕']) if d()])
+        if 'Отравитель' not in self.ability and 'Антидот' not in self.items and 'Ядовитые твари' in lair_defense:
+                luck -= sum([1 for index in range(lair_defense['Ядовитые твари']) if d()])
         if luck < 0:
-            self.target.del_thief({'result': 'death', 'level': self.level, 'items': self.breaking_items(), 'comment': '╨п╨┤╨╛╨▓╨╕╤В╤Л╨╡ ╤В╨▓╨░╤А╨╕ ╤Г╨▒╨╕╨╗╨╕'})
+            self.target.del_thief({'result': 'death', 'level': self.level, 'items': self.breaking_items(), 'comment': 'Ядовитые твари убили'})
             return
-        if '╨Я╤А╨╛╨║╨╗╤П╤В╤Л╨╣ ╨║╨╕╨╜╨╢╨░╨╗' in self.items and '╨Ю╤Е╤А╨░╨╜╨░' in lair_defense:
-            luck -= lair_defense['╨Ю╤Е╤А╨░╨╜╨░']
+        if 'Проклятый кинжал' in self.items and 'Охрана' in lair_defense:
+            luck -= lair_defense['Охрана']
         else:
-            if '╨Р╤Б╤Б╨░╤Б╨╕╨╜' not in self.ability and '╨Ч╨░╤З╨░╤А╨╛╨▓╨░╨╜╨╜╤Л╨╣ ╨║╨╕╨╜╨╢╨░╨╗' not in self.items and '╨Ю╤Е╤А╨░╨╜╨░' in lair_defense:
-                luck -= sum([1 for index in range(lair_defense['╨Ю╤Е╤А╨░╨╜╨░']) if d()])
+            if 'Ассасин' not in self.ability and 'Зачарованный кинжал' not in self.items and 'Охрана' in lair_defense:
+                luck -= sum([1 for index in range(lair_defense['Охрана']) if d()])
         if luck < 0:
-            self.target.del_thief({'result': 'catch', 'level': self.level, 'items': self.breaking_items(), 'sex': self.sex, 'comment': '╨Ю╤Е╤А╨░╨╜╨░ ╨┐╨╛╨╣╨╝╨░╨╗╨░'})
+            self.target.del_thief({'result': 'catch', 'level': self.level, 'items': self.breaking_items(), 'sex': self.sex, 'comment': 'Охрана поймала'})
             return
-        if '╨Ъ╨╛╨╗╤М╤Ж╨╛ ╨╝╨╡╤А╤Ж╨░╨╜╨╕╤П' in self.items and '╨н╨╗╨╕╤В╨╜╨░╤П ╨╛╤Е╤А╨░╨╜╨░' in lair_defense:
-            luck -= lair_defense['╨н╨╗╨╕╤В╨╜╨░╤П ╨╛╤Е╤А╨░╨╜╨░']
+        if 'Кольцо мерцания' in self.items and 'Элитная охрана' in lair_defense:
+            luck -= lair_defense['Элитная охрана']
         else:
-            if '╨Э╨╛╤З╨╜╨░╤П ╤В╨╡╨╜╤М' not in self.ability and '╨Ъ╨╛╨╗╤М╤Ж╨╛-╨╜╨╡╨▓╨╕╨┤╨╕╨╝╨║╨░' not in self.items and '╨н╨╗╨╕╤В╨╜╨░╤П ╨╛╤Е╤А╨░╨╜╨░' in lair_defense:
-                luck -= sum([1 for index in range(lair_defense['╨н╨╗╨╕╤В╨╜╨░╤П ╨╛╤Е╤А╨░╨╜╨░']) if d()])
+            if 'Ночная тень' not in self.ability and 'Кольцо-невидимка' not in self.items and 'Элитная охрана' in lair_defense:
+                luck -= sum([1 for index in range(lair_defense['Элитная охрана']) if d()])
         if luck < 0:
-            self.target.del_thief({'result': 'catch', 'level': self.level, 'items': self.breaking_items(), 'sex': self.sex, 'comment': '╨н╨╗╨╕╤В╨╜╨░╤П ╨╛╤Е╤А╨░╨╜╨░ ╨┐╨╛╨╣╨╝╨░╨╗╨░'})
+            self.target.del_thief({'result': 'catch', 'level': self.level, 'items': self.breaking_items(), 'sex': self.sex, 'comment': 'Элитная охрана поймала'})
             return
         if luck > 0:
             self.theft(luck)
 
     def theft(self, luck):
-        if '╨Ц╨░╨┤╨╕╨╜╨░' in self.ability:
+        if 'Жадина' in self.ability:
             luck += 1
-        if '╨С╨╡╨╖╨┤╨╛╨╜╨╜╤Л╨╣ ╨╝╨╡╤И╨╛╨║' in self.items:
+        if 'Бездонный мешок' in self.items:
             luck += 1
         spoil = []
         fail = False
         while luck > 0 and not fail:
             list_treasure = list(reversed(sorted(self.target.list_treasure())))
-            treasure = (100, '╨б╨╡╤А╨╡╨▒╤А╨╛')
+            treasure = (100, 'Серебро')
             if len(list_treasure) > 1:
-                if list_treasure[0][1] == '╨б╨╡╤А╨╡╨▒╤А╨╛' and (list_treasure[1][0] or list_treasure[1][0] > list_treasure[0][0]) > 100:
+                if list_treasure[0][1] == 'Серебро' and (list_treasure[1][0] or list_treasure[1][0] > list_treasure[0][0]) > 100:
                     treasure = list_treasure[1]
-                elif list_treasure[0][1] != '╨б╨╡╤А╨╡╨▒╤А╨╛' and list_treasure[0][0] > 100:
+                elif list_treasure[0][1] != 'Серебро' and list_treasure[0][0] > 100:
                     treasure = list_treasure[0]
             elif len(list_treasure) == 1:
-                if list_treasure[0][1] != '╨б╨╡╤А╨╡╨▒╤А╨╛' or (list_treasure[0][1] == '╨б╨╡╤А╨╡╨▒╤А╨╛' and list_treasure[0][0] < 100):
+                if list_treasure[0][1] != 'Серебро' or (list_treasure[0][1] == 'Серебро' and list_treasure[0][0] < 100):
                     treasure = list_treasure[0]
             else:
                 break
-            if '╨Ы╨╛╨▓╨║╨░╤З' not in self.ability and '╨б╨╛╨╜╨╜╤Л╨╣ ╨┐╨╛╤А╨╛╤И╨╛╨║' not in self.items:
+            if 'Ловкач' not in self.ability and 'Сонный порошок' not in self.items:
                 if d(5 - self.level, 10):
                     fail = True
             if not fail:
@@ -416,31 +415,31 @@ class Thief(object):
                 spoil.append(treasure)
             luck -= 1
         if fail:
-            self.target.del_thief({'result': 'catch', 'level': self.level, 'items': self.breaking_items(), 'sex': self.sex, 'comment': '╨┤╤А╨░╨║╨╛╨╜ ╨┐╨╛╨╣╨╝╨░╨╗'})
+            self.target.del_thief({'result': 'catch', 'level': self.level, 'items': self.breaking_items(), 'sex': self.sex, 'comment': 'дракон поймал'})
         else:
-            if '╨Ф╤Л╤А╤П╨▓╤Л╨╣ ╨╝╨╡╤И╨╛╨║' in self.items:
+            if 'Дырявый мешок' in self.items:
                 self.target.add_treasure(spoil)
-            self.target.del_thief({'result': 'success'})
+            self.target.del_thief({'result': 'success', 'comment': 'кража успешна'})
 
 
 def main():
     dragon = Dragon()
     menu = '''menu:
-    0 ╨▓╤Л╤Е╨╛╨┤
-    1 ╨╛ ╨┤╤А╨░╨║╨╛╨╜╨╡
-    2 ╨┐╨╛╨╗╤Г╤З╨╕╤В╤М ╤Б╨╛╨║╤А╨╛╨▓╨╕╤Й╨░
-    3 ╨╖╨░╤Б╨╜╤Г╤В╤М/╨┐╤А╨╛╤Б╨╜╤Г╤В╤Б╤П
-    4 ╤Б╨╝╨╡╨╜╨╕╤В╤М ╨╗╨╛╨│╨╛╨▓╨╛
-    5 ╨┤╨╛╨▒╨░╨▓╨╕╤В╤М/╤Г╨▒╤А╨░╤В╤М ╨╖╨░╤И╨╕╤В╤Г
-    6 ╤Г╤А╨╛╨▓╨╡╨╜╤М ╤Б╨╗╨░╨▓╤Л
-    7 ╨╛ ╨▓╨╛╤А╨╡
-    8 ╨┤╨░╤В╤М ╨▓╨╛╤А╤Г ╨┐╤А╨╡╨┤╨╝╨╡╤В
-    9 ╤Г╨▒╨╕╤В╤М ╨▓╨╛╤А╨░'''
+0 выход
+1 о драконе
+2 получить сокровища
+3 заснуть/проснутся
+4 сменить логово
+5 добавить/убрать зашиту
+6 уровень славы
+7 о воре
+8 дать вору предмет
+9 убить вора'''
     print(menu)
-    dragon.add_treasure(get_treasure(123))  # debug
+    dragon.add_treasure(get_treasure(123)) # debug
     while True:
-        menu_item = input('###╨Т╨▓╨╡╨┤╨╕╤В╨╡ ╨╜╨╛╨╝╨╡╤А: ')
-        if menu_item == '':
+        menu_item = raw_input('###Введите номер: ')
+        if str(menu_item) == '':
             if 'thief' in dragon.my_enemy:
                 work = dragon.my_enemy['thief'].act()
             else:
@@ -450,58 +449,58 @@ def main():
         elif menu_item == '0':
             break
         elif menu_item == '1':
-            print('╨╖╨╛╨╗╨╛╤В╨╛╨╡ ╨╗╨╛╨╢╨╡ =', sum([index[0] for index in dragon.list_treasure()]))
-            print('sleep =', str(dragon.sleep))
-            print('╤Г╤А╨╛╨▓╨╡╨╜╤М ╤Б╨╗╨░╨▓╤Л =', str(dragon.ill_fame_level))
-            print('╨╛╤З╨║╨╕ ╤Б╨╗╨░╨▓╤Л =', str(dragon.ill_fame_point))
-            print('╨╗╨╛╨│╨╛╨▓╨╛ =', dragon.lair_location[0])
-            print('╤Б╤В╤А╨░╨╢ ╤Б╨╛╨║╤А╨╛╨▓╨╕╤Й =', str(dragon.achievement['╨б╤В╤А╨░╨╢ ╤Б╨╛╨║╤А╨╛╨▓╨╕╤Й']))
-            print('╨╖╨░╤Й╨╕╤В╨░ ╨╗╨╛╨│╨╛╨▓╨░:\n' + '\n'.join([name for name, value in dragon.lair_defense]))
-            print('╨▓╨╛╤А╨╛╨▓╤Б╨║╨╕╨╡ ╨┐╤А╨╡╨┤╨╝╨╡╤В╤Л:\n' + '\n'.join(dragon.thief_loot))
+            print('золотое ложе = ' + str(sum([index[0] for index in dragon.list_treasure()])))
+            print('sleep = ' + str(dragon.sleep))
+            print('уровень славы = ' + str(dragon.ill_fame_level))
+            print('очки славы = ' + str(dragon.ill_fame_point))
+            print('логово = ' + dragon.lair_location[0])
+            print('страж сокровищ = ' + str(dragon.achievement['Страж сокровищ']))
+            print('защита логова:\n' + '\n'.join([name for name, value in dragon.lair_defense]))
+            print('воровские предметы:\n' + '\n'.join(dragon.thief_loot))
         elif menu_item == '2':
             try:
-                dragon.add_treasure(get_treasure(int(input('###╨Т╨▓╨╡╨┤╨╕╤В╨╡ ╨║╨╛╨╗╨╕╤З╨╡╤Б╤В╨▓╨╛ ╤Б╨╛╨║╤А╨╛╨▓╨╕╤Й: '))))
+                dragon.add_treasure(get_treasure(int(raw_input('###Введите количество сокровищ: '))))
             except ValueError:
-                print('###╨Т╨▓╨╛╨┤╨╕╤В╨╡ ╤З╨╕╤Б╨╗╨╛!')
+                print('###Вводите число!')
         elif menu_item == '3':
             dragon.switch_sleep()
         elif menu_item == '4':
-            print('╨╗╨╛╨│╨╛╨▓╨╛ =', dragon.lair_location[0])
+            print('логово = ' + dragon.lair_location[0])
             for num, lair in enumerate(dragon.config['possible_lair_location']):
-                print(num, lair[0])
+                print(str(num) + lair[0])
             try:
-                dragon.lair_location = dragon.config['possible_lair_location'][int(input('###╨Т╨▓╨╡╨┤╨╕╤В╨╡ ╨╜╨╛╨╝╨╡╤А ╨╗╨╛╨│╨╛╨▓╨░: '))]
+                dragon.lair_location = dragon.config['possible_lair_location'][int(input('###Введите номер логова: '))]
             except ValueError:
-                print('###╨Т╨▓╨╛╨┤╨╕╤В╨╡ ╤З╨╕╤Б╨╗╨╛!')
+                print('###Вводите число!')
         elif menu_item == '5':
             dragon.lair_defense
             for num, defense in enumerate(dragon.config['possible_lair_defense']):
-                print(num, defense[0], '=', str(defense in dragon.lair_defense))
+                print(str(num) + defense[0] + ' = ' + str(defense in dragon.lair_defense))
             try:
-                number = int(input('###╨Т╨▓╨╡╨┤╨╕╤В╨╡ ╨╜╨╛╨╝╨╡╤А ╨╖╨░╤И╨╕╤В╤Л: '))
+                number = int(raw_input('###Введите номер зашиты: '))
                 if dragon.config['possible_lair_defense'][number] in dragon.lair_defense:
                     dragon.lair_defense.remove(dragon.config['possible_lair_defense'][number])
                 else:
                     dragon.lair_defense.append(dragon.config['possible_lair_defense'][number])
             except ValueError:
-                print('###╨Т╨▓╨╛╨┤╨╕╤В╨╡ ╤З╨╕╤Б╨╗╨╛!')
+                print('###Вводите число!')
         elif menu_item == '6':
             try:
-                dragon.ill_fame_level = int(input('###╨Т╨▓╨╡╨┤╨╕╤В╨╡ ╤Г╤А╨╛╨▓╨╡╨╜╤М ╤Б╨╗╨░╨▓╤Л: '))
+                dragon.ill_fame_level = int(raw_input('###Введите уровень славы: '))
             except ValueError:
-                print('###╨Т╨▓╨╛╨┤╨╕╤В╨╡ ╤З╨╕╤Б╨╗╨╛!')
+                print('###Вводите число!')
         elif menu_item == '7':
             if 'thief' in dragon.my_enemy:
                 dragon.my_enemy['thief'].about()
         elif menu_item == '8':
             if 'thief' in dragon.my_enemy:
                 for num, lair in enumerate(dragon.thief_loot):
-                    print(num, lair)
+                    print(str(num) + lair)
                 try:
-                    number = int(input('###╨Т╨▓╨╡╨┤╨╕╤В╨╡ ╨╜╨╛╨╝╨╡╤А ╨┐╤А╨╡╨┤╨╝╨╡╤В╨░: '))
+                    number = int(raw_input('###Введите номер предмета: '))
                     dragon.give_item(dragon.thief_loot[number])
                 except ValueError:
-                    print('###╨Т╨▓╨╛╨┤╨╕╤В╨╡ ╤З╨╕╤Б╨╗╨╛!')
+                    print('###Вводите число!')
         elif menu_item == '9':
             if 'thief' in dragon.my_enemy:
                 del dragon.my_enemy['thief']
