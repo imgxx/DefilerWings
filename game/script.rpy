@@ -1,6 +1,8 @@
 ﻿init python:
     from pythoncode.core import Game
+    from pythoncode.core import Dragon
     game = Game()
+    drag = Dragon()
 
 init:
     $ narrator = NVLCharacter(None, kind=nvl)
@@ -70,5 +72,6 @@ label fight:
 label lair:
     "Вы входите в логово"
     dragon "Аррггххх"
+    $ renpy.say(dragon, 'Моё имя ' + drag.name + ', я ' + drag.kind())
     "dddfa"
     
