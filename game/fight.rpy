@@ -1,3 +1,4 @@
+# coding=utf-8
 init python:
     from pythoncode import battle
 
@@ -32,7 +33,6 @@ label lb_fight(foe=game.foe):
             menu:
                 'Продолжать бой':
                     pass
-
                 'Отступить':
                     if foe.kind == 'knight':
                         # Отступаем в новое логово
@@ -80,7 +80,6 @@ label lb_fight_dragon_by_knigth(foe=game.knight):
             menu:
                 'Продолжать бой':
                     pass
-
                 'Отступить':
                     "Вы бежали в логово"
                     hide foeimg

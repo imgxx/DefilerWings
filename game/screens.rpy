@@ -1,4 +1,5 @@
-﻿# This file is in the public domain. Feel free to modify it as a basis
+﻿# coding=utf-8
+# This file is in the public domain. Feel free to modify it as a basis
 # for your own screens.
 
 ##############################################################################
@@ -9,9 +10,6 @@
 screen say:
 
     use sc_dialog(who, game.currentCharacter.avatar, what)
-
-
-
     use status_bar
     # Use the quick menu.
     use quick_menu
@@ -35,15 +33,11 @@ screen choice:
             spacing 2
 
             for caption, action, chosen in items:
-
                 if action:
-
                     button:
                         action action
                         style "menu_choice_button"
-
                         text caption style "menu_choice"
-
                 else:
                     text caption style "menu_caption"
 
@@ -94,21 +88,15 @@ screen dw_choice(items):
             spacing 2
 
             for caption, value, visible, condition in items:
-
                 if visible and condition:
-
                     button:
                         action Return(value)
                         style "menu_choice_button"
-
                         text caption style "menu_choice"
-
                 if visible and not condition:
-
                     button:
                         action NullAction()
                         style "menu_choice_button"
-
                         text caption style "menu_choice_inactive"
     use status_bar
 
@@ -146,7 +134,7 @@ screen nvl:
         style "nvl_window"
         xpos 200
         xsize 760
-        align (0.0, 0.0)
+        align(0.0, 0.0)
 
         viewport:
             mousewheel True
@@ -160,33 +148,23 @@ screen nvl:
             for who, what, who_id, what_id, window_id in dialogue:
                 window:
                     id window_id
-
                     has hbox:
                         spacing 10
-
                     if who is not None:
                         text who id who_id
-
                     text what id what_id
 
             # Display a menu, if given.
             if items:
-
                 vbox:
                     id "menu"
-
                     for caption, action, chosen in items:
-
                         if action:
-
                             button:
                                 style "nvl_menu_choice_button"
                                 action action
-
                                 text caption style "nvl_menu_choice"
-
                         else:
-
                             text caption style "nvl_dialogue"
 
     add SideImage() xalign 0.0 yalign 1.0
@@ -217,7 +195,7 @@ screen main_menu:
         yalign .89
         xmaximum 200
 
-        #has vbox
+        # has vbox
         if not renpy.can_load("1-1"):
             textbutton _("Начать сюжет") action Start():
                 xalign .966
@@ -244,21 +222,21 @@ screen main_menu:
             xalign .966
             yalign .925
 
-    #text "{font=fonts/Lombardina лого.ttf}Крылья":
-        #xalign 0.94
-        #yalign 0.11
-        #text_align 1
-        #size 90
-        #bold False
-        #color "#607080"
-    #text "{font=fonts/Lombardina лого.ttf}Осквернителя":
-        #xalign 0.95
-        #yalign 0.22
-        #text_align 1
-        #size 60
-        #bold False
-        #color "#607080"
-    text "{font=fonts/PFMonumentaPro-Regular кнопки.ttf}Версия: %s" % config.version:
+    # text "{font=fonts/Lombardina.ttf}Крылья":
+        # xalign 0.94
+        # yalign 0.11
+        # text_align 1
+        # size 90
+        # bold False
+        # color "#607080"
+    # text "{font=fonts/Lombardina.ttf}Осквернителя":
+        # xalign 0.95
+        # yalign 0.22
+        # text_align 1
+        # size 60
+        # bold False
+        # color "#607080"
+    text "{font=fonts/PFMonumentaPro-Regular.ttf}Версия: %s" % config.version:
         xalign 0.96
         yalign 0.29
         text_align 0.5
@@ -277,7 +255,7 @@ init python:
     style.mm_frame.background = Frame("img/menu/frame.png", 125, 25)
 
     style.mm_button_text.size = 22
-    style.mm_button_text.font = "fonts/PFMonumentaPro-Regular кнопки.ttf"
+    style.mm_button_text.font = "fonts/PFMonumentaPro-Regular.ttf"
 
     style.mm_button.yminimum = 70
     style.mm_button.xminimum = 280
@@ -304,8 +282,8 @@ screen navigation:
 
         textbutton _("Обратно") action Return()
         textbutton _("Настройки") action ShowMenu("preferences")
-        #textbutton _("Сохранить игру") action ShowMenu("save")
-        textbutton _("Загрузить игру") action ShowMenu("load")
+        # textbutton _("Сохранить игру") action ShowMenu("save")
+        # textbutton _("Загрузить игру") action ShowMenu("load")
         textbutton _("Главное меню") action MainMenu()
         textbutton _("Помощь") action Help()
         textbutton _("Выход") action Quit()
@@ -335,29 +313,8 @@ screen file_picker:
 
         has vbox
 
-        # The buttons at the top allow the user to pick a
-        # page of files.
-        hbox:
-            style_group "file_picker_nav"
-
-            textbutton _("Назад"):
-                action FilePagePrevious()
-
-            textbutton _("Авто"):
-                action FilePage("auto")
-
-            #textbutton _("Быстрое сохранение"):
-            #    action FilePage("quick")
-
-            for i in range(1, 9):
-                textbutton str(i):
-                    action FilePage(i)
-
-            textbutton _("Далее"):
-                action FilePageNext()
-
         $ columns = 2
-        $ rows = 5
+        $ rows = 2
 
         # Display a grid of file slots.
         grid columns rows:
@@ -459,6 +416,12 @@ screen preferences:
                 has vbox
 
                 textbutton _("Джостик...") action Preference("joystick")
+            
+            frame:
+                style_group "pref"
+                has vbox
+
+                textbutton _("Сброс сюжетной игры") action Game_Reset()
 
         vbox:
             frame:
@@ -547,8 +510,13 @@ init -2:
     style soundtest_button:
         xalign 1.0
 
-    #style pref_root:
+    # style pref_root:
     #    background img/menu/gmenu.png
+    
+    python:
+        class Game_Reset(object):
+            def __call__(self):
+                renpy.unlink_save("1-1")
 
 ##############################################################################
 # Yes/No Prompt
@@ -583,12 +551,12 @@ screen yesno_prompt:
         hbox:
             xalign 0.5
             spacing 100
-            if message == layout.QUIT and not main_menu:
+            if message == layout.QUIT and not main_menu and not save_blocked:
                 if not freeplay:
                     textbutton _("Да") action FileSave("1", confirm=False, page="1"), yes_action
                 else:
                     textbutton _("Да") action FileSave("3", confirm=False, page="1"), yes_action
-            elif message == layout.MAIN_MENU:
+            elif message == layout.MAIN_MENU and not save_blocked:
                 if not freeplay:
                     textbutton _("Да") action FileSave("1", confirm=False, page="1"), yes_action
                 else:
@@ -624,8 +592,8 @@ screen quick_menu:
         yalign 1.0
 
         textbutton _("Назад") action Rollback()
-        #textbutton _("Сохранить") action ShowMenu('save')
-        #textbutton _("Б.сохранение") action QuickSave()
+        # textbutton _("Сохранить") action ShowMenu('save')
+        # textbutton _("Б.сохранение") action QuickSave()
         textbutton _("Б.загрузка") action QuickLoad()
         textbutton _("пропуск") action Skip()
         textbutton _("Б.пропуск") action Skip(fast=True, confirm=True)
@@ -654,9 +622,11 @@ init python:
         girls_cols = 4
         girls_cells = girls_rows * girls_cols
         girl_page = 0
-        girl_position_priority = (6, 7, 8, 9,
-                                  5, 0, 1, 10,
-                                  4, 3, 2, 11)
+        girl_position_priority = (
+            6, 7, 8, 9,
+            5, 0, 1, 10,
+            4, 3, 2, 11
+        )
 screen girls_menu:
 
     # This ensures that any other menu screen is replaced.
@@ -678,7 +648,7 @@ screen girls_menu:
                     $ position_i += 1
                     $ girl_i = girl_page * girls_cells + girl_position_priority[position_i]
                     if girl_i < game.girls_list.prisoners_count:
-                        imagebutton idle Image(im.Grayscale(game.girls_list.prisoners[girl_i].avatar)) hover game.girls_list.prisoners[girl_i].avatar action [Function(game.girls_list.set_active, girl_i), Jump('lb_nature_sex')]
+                        imagebutton idle Image(im.Grayscale(game.girls_list.prisoners[girl_i].avatar)) hover game.girls_list.prisoners[girl_i].avatar action[Function(game.girls_list.set_active, girl_i), Jump('lb_nature_sex')]
                     else:
                         null
 
@@ -687,11 +657,11 @@ screen girls_menu:
             xpos 60
             spacing 50
             if girl_page > 0:
-                textbutton _("Предыдущая страница") action [SetVariable('girl_page', prev_girl_page), Show("girls_menu")]
+                textbutton _("Предыдущая страница") action[SetVariable('girl_page', prev_girl_page), Show("girls_menu")]
             else:
                 textbutton _("Предыдущая страница") action None
             textbutton _("Вернуться") action Return()
             if next_girl_page * girls_cells < game.girls_list.prisoners_count:
-                textbutton _("Следующая страница") action [SetVariable('girl_page', next_girl_page), Show("girls_menu")]
+                textbutton _("Следующая страница") action[SetVariable('girl_page', next_girl_page), Show("girls_menu")]
             else:
                 textbutton _("Следующая страница") action None

@@ -1,3 +1,4 @@
+# coding=utf-8
 label lb_choose_dragon:
     # Хардкод на трех драконов.
     python:
@@ -5,7 +6,7 @@ label lb_choose_dragon:
         if game.dragon is None:
             dragons = []
             dragons_choosed = []
-        if game.dragon is not None and game.dragon.heads:
+        elif game.dragon.is_alive and not game.is_lost:
             dragons = []
             dragons_choosed = []
             # добавляем 1 гоблина в армию тьмы
@@ -17,8 +18,14 @@ label lb_choose_dragon:
         togle_dragonchoose_button = None
         if game.dragon and len(game.dragon.heads) == 0 and len(dragons_choosed) == 3:
             lost = True
-    if lost:  # TODO: приделать что-то что происходит при поражении
-        "Вы проиграли"
+    if lost:  # TODO: Переделать что-то что происходит при поражении
+        menu:
+            "Вы проиграли"
+            "Начать заново":
+                python:
+                        renpy.unlink_save("1-1")
+                        renpy.full_restart()
+                return
 
     python hide:
         used_gifts = []
@@ -26,15 +33,19 @@ label lb_choose_dragon:
         if game.dragon is not None:
             used_avatars.append(game.dragon.avatar)
 
-        while len(dragons) < 3:
-            child = core.Dragon(parent=game.dragon, gameRef=game, base_character=game.adv_character)
-            if child._gift not in used_gifts and child.avatar not in used_avatars:
-                dragons.append(child)
-                used_gifts.append(child._gift)
-                used_avatars.append(child.avatar)
+        for x in xrange(3):
+            try:
+                child = core.Dragon(parent=game.dragon, used_gifts=used_gifts, used_avatars=used_avatars, gameRef=game, base_character=game.adv_character)
+            except StopIteration:
+                break  # TODO: действие в случае когда драконы закончились
+            dragons.append(child)
+            used_gifts.append(child._gift)
+            used_avatars.append(child.avatar)
         renpy.childimg1 = ui.image(dragons[0].avatar) if dragons[0] not in dragons_choosed else ui.image(im.Grayscale(dragons[0].avatar))
-        renpy.childimg2 = ui.image(dragons[1].avatar) if dragons[1] not in dragons_choosed else ui.image(im.Grayscale(dragons[1].avatar))
-        renpy.childimg3 = ui.image(dragons[2].avatar) if dragons[2] not in dragons_choosed else ui.image(im.Grayscale(dragons[2].avatar))
+        if len(dragons) > 1:
+            renpy.childimg2 = ui.image(dragons[1].avatar) if dragons[1] not in dragons_choosed else ui.image(im.Grayscale(dragons[1].avatar))
+        if len(dragons) > 2:
+            renpy.childimg3 = ui.image(dragons[2].avatar) if dragons[2] not in dragons_choosed else ui.image(im.Grayscale(dragons[2].avatar))
 
         def get_breedbg():
             import random
@@ -50,6 +61,7 @@ label lb_choose_dragon:
             else:
                 return "img/scene/hatch/base.png"
         renpy.breedbg = ui.image(get_breedbg())
+
     screen ava_screen:
         add renpy.breedbg
         add renpy.childimg1 xalign 0.0 yalign 0.0
@@ -59,6 +71,7 @@ label lb_choose_dragon:
         imagebutton idle "img/bg/frame.png" hover "img/bg/frame_light.png" selected_idle "img/bg/frame_light.png" xalign 0.0 yalign 0.5 action SetVariable("child_choose", dragons[1]), SetVariable("togle_dragonchoose_button", True), Show("text_screen"), SelectedIf(child_choose == dragons[1]), SensitiveIf(dragons[1] not in dragons_choosed)
         imagebutton idle "img/bg/frame.png" hover "img/bg/frame_light.png" selected_idle "img/bg/frame_light.png" xalign 0.0 yalign 1.0 action SetVariable("child_choose", dragons[2]), SetVariable("togle_dragonchoose_button", True), Show("text_screen"), SelectedIf(child_choose == dragons[2]), SensitiveIf(dragons[2] not in dragons_choosed)
         use status_bar
+
     screen text_screen:
         $renpy.childtext = child_choose.description
         window:

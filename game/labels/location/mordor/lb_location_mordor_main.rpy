@@ -1,3 +1,4 @@
+# coding=utf-8
 label lb_location_mordor_main:
     $ place = 'mordor' 
     show place as bg
@@ -49,6 +50,10 @@ label lb_location_mordor_questtime:
         call lb_choose_dragon
     else:
         $ game.defeat()
-        "Квест провален. Ты проиграл. Какая досада."
+        menu:
+            "Квест провален. Ты проиграл. Какая досада."
+            "Попробовать еще раз":
+                call lb_choose_dragon
+                return
         
     return
